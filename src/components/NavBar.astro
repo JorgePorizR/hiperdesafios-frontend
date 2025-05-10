@@ -1,0 +1,104 @@
+---
+import { categories } from "@models/categories";
+import UserMenu from "@components/react/UserMenu";
+import Logo from "@icons/Logo.svg";
+
+interface Props {
+  isLoggedIn?: boolean;
+}
+
+const { isLoggedIn = true } = Astro.props;
+---
+
+<nav
+  class="fixed top-0 left-0 w-full z-50 bg-white transition-colors duration-300 shadow-md"
+  id="navbar"
+>
+  <div class="container mx-auto px-4">
+    <!-- Navegación superior: Logo y Usuario -->
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <div class="flex-shrink-0">
+        <a href="/" class="flex items-center">
+          <Logo class="h-24 w-24" />
+        </a>
+      </div>
+
+      <!-- Opciones principales de navegación -->
+      <div class="hidden md:flex items-center space-x-8">
+        <!-- Menú de categorías con dropdown -->
+        <div class="relative group">
+          <button
+            class="text-gray-700 hover:text-[#ED6A0F] font-medium transition-colors duration-200 flex items-center"
+          >
+            Categorías
+            <svg
+              class="ml-1 w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+
+          <!-- Dropdown de categorías -->
+          <div
+            class="absolute z-10 left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+          >
+            {
+              categories.map((category) => (
+                <a
+                  href={`/categoria/${category.slug}`}
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  {category.name}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Desafíos -->
+        <a
+          href="/desafios"
+          class="text-gray-700 hover:text-[#ED6A0F] font-medium transition-colors duration-200"
+        >
+          Desafíos
+        </a>
+
+        <!-- Ranking -->
+        <a
+          href="/ranking"
+          class="text-gray-700 hover:text-[#ED6A0F] font-medium transition-colors duration-200"
+        >
+          Ranking
+        </a>
+      </div>
+
+      <!-- Usuario -->
+      <div class="relative">
+        <UserMenu isLoggedIn={isLoggedIn} client:load />
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("astro:page-load", () => {
+      if (typeof window !== "undefined") {
+        window.addEventListener("scroll", () => {
+          const navbar = document.getElementById("navbar");
+          if (window.scrollY > 10) {
+            navbar?.classList.add("bg-white/80", "backdrop-blur");
+          } else {
+            navbar?.classList.remove("bg-white/80", "backdrop-blur");
+          }
+        });
+      }
+    });
+  </script>
+</nav>

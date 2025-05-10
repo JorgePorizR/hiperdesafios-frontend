@@ -1,0 +1,37 @@
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo del logo -->
+  <rect x="50" y="80" width="300" height="140" rx="20" ry="20" fill="transparent" stroke="#ED6A0F" stroke-width="6"/>
+  
+  <!-- Texto principal -->
+  <text x="200" y="155" font-family="Arial, sans-serif" font-size="36" font-weight="bold" text-anchor="middle" fill="#333333">HIPER</text>
+  <text x="200" y="190" font-family="Arial, sans-serif" font-size="36" font-weight="bold" text-anchor="middle" fill="#ED6A0F">DESAFÍOS</text>
+  
+  <!-- Estrella izquierda -->
+  <polygon points="70,110 75,120 85,122 77.5,130 80,140 70,135 60,140 62.5,130 55,122 65,120" fill="#ED6A0F"/>
+  
+  <!-- Estrella derecha -->
+  <polygon points="330,110 335,120 345,122 337.5,130 340,140 330,135 320,140 322.5,130 315,122 325,120" fill="#ED6A0F"/>
+  
+  <!-- Carrito de compras bien diseñado -->
+  <g transform="translate(150, 55) scale(0.45)">
+    <!-- Estructura principal del carrito -->
+    <path d="M40,20 C40,20 45,65 50,90 C52,100 58,105 68,105 L170,105 C180,105 186,95 188,90 L200,40 C202,30 195,20 185,20 L40,20 Z" 
+          fill="#ED6A0F" 
+          stroke="#ED6A0F" 
+          stroke-width="8" 
+          stroke-linejoin="round" />
+    <!-- Ruedas del carrito -->
+    <circle cx="85" cy="115" r="10" fill="#ED6A0F" stroke="none" />
+    <circle cx="155" cy="115" r="10" fill="#ED6A0F" stroke="none" />
+    <!-- Mango del carrito -->
+    <path d="M40,20 Q25,20 20,5" stroke="#ED6A0F" stroke-width="8" fill="none" stroke-linecap="round" />
+  </g>
+  
+  <!-- Trofeo estilizado -->
+  <path d="M200,230 L190,215 L210,215 Z" fill="#ED6A0F"/>
+  <rect x="195" y="215" width="10" height="5" fill="#ED6A0F"/>
+  <ellipse cx="200" cy="210" rx="15" ry="10" fill="#ED6A0F"/>
+  
+  <!-- Línea decorativa -->
+  <line x1="100" y1="210" x2="300" y2="210" stroke="#ED6A0F" stroke-width="3" stroke-dasharray="5,3"/>
+</svg>

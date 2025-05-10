@@ -1,0 +1,17 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { categories } from "@models/categories";
+
+const { name } = Astro.params;
+
+if (!name) return Astro.redirect('/404');
+
+const category = categories.find((cat) => cat.slug === name);
+if (!category) return Astro.redirect('/404');
+
+export const prerender = false;
+---
+
+<Layout title={`Productos de la Categoria: ${category.name}`}>
+  <h1>categoria: {name}</h1>
+</Layout>

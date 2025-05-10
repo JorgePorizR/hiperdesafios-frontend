@@ -1,0 +1,66 @@
+---
+import Logo from "@icons/Logo.svg";
+import Facebook from "@icons/Facebook.svg";
+import Instagram from "@icons/Instagram.svg";
+import X from "@icons/X.svg";
+---
+
+<footer class="bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 pt-10 pb-6 mt-20 border-t border-gray-200 dark:border-gray-700">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+
+      <!-- Logo + Descripción -->
+      <div>
+        <a href="/" class="flex items-center gap-2 mb-4">
+          <Logo class="h-10 w-10" />
+          <span class="text-xl font-bold text-gray-800 dark:text-white">Hiperdesafíos</span>
+        </a>
+        <p class="text-sm">
+          Supermercado con desafíos interactivos que premian tu compromiso. ¡Gana puntos y sube en el ranking!
+        </p>
+      </div>
+
+      <!-- Enlaces principales -->
+      <div>
+        <h4 class="text-md font-semibold text-gray-800 dark:text-white mb-3">Secciones</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="/desafios" class="hover:text-[#ED6A0F] transition-colors">Desafíos</a></li>
+          <li><a href="/ranking" class="hover:text-[#ED6A0F] transition-colors">Ranking</a></li>
+          <li><a href="/categorias" class="hover:text-[#ED6A0F] transition-colors">Categorías</a></li>
+        </ul>
+      </div>
+
+      <!-- Información útil -->
+      <div>
+        <h4 class="text-md font-semibold text-gray-800 dark:text-white mb-3">Ayuda</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="/faq" class="hover:text-[#ED6A0F] transition-colors">Preguntas frecuentes</a></li>
+          <li><a href="/contacto" class="hover:text-[#ED6A0F] transition-colors">Contacto</a></li>
+          <li><a href="/terminos" class="hover:text-[#ED6A0F] transition-colors">Términos y condiciones</a></li>
+        </ul>
+      </div>
+
+      <!-- Redes sociales -->
+      <div>
+        <h4 class="text-md font-semibold text-gray-800 dark:text-white mb-3">Síguenos</h4>
+        <div class="flex space-x-4">
+          <a href="https://facebook.com" target="_blank" class="hover:text-[#ED6A0F] transition-colors" aria-label="Facebook">
+            <Facebook class="h-8 w-8 text-white" />
+          </a>
+          <a href="https://instagram.com" target="_blank" class="hover:text-[#ED6A0F] transition-colors" aria-label="Instagram">
+            <Instagram class="h-8 w-8 text-white" />
+          </a>
+          <a href="https://twitter.com" target="_blank" class="hover:text-[#ED6A0F] transition-colors" aria-label="X (Twitter)">
+            <X class="h-8 w-8 text-white" />
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Línea final -->
+    <div class="mt-10 border-t border-gray-300 dark:border-gray-700 pt-4 text-sm text-center text-gray-500 dark:text-gray-400">
+      © {new Date().getFullYear()} Hiperdesafíos. Todos los derechos reservados.
+    </div>
+  </div>
+</footer>

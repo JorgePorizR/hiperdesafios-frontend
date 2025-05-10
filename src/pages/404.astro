@@ -1,0 +1,43 @@
+---
+import LayoutSimple from '../layouts/LayoutSimple.astro';
+---
+
+<LayoutSimple title="404 - Página no encontrada">
+  <main class="flex flex-col items-center justify-center min-h-screen px-4 py-2 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <div class="text-center">
+      <h1 class="text-9xl font-extrabold text-gray-800 dark:text-gray-100 tracking-tighter mb-4">
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">404</span>
+      </h1>
+      
+      <div class="w-20 h-1 mx-auto bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mb-6"></div>
+      
+      <h2 class="text-3xl font-bold text-gray-700 dark:text-gray-200 mb-4">Página no encontrada</h2>
+      
+      <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-md mx-auto">
+        Lo sentimos, la página que estás buscando no existe o ha sido movida.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+          Volver al inicio
+        </a>
+        
+        <button onclick="window.history.back()" class="px-6 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-medium rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+          Volver atrás
+        </button>
+      </div>
+    </div>
+    
+    <div class="mt-5 relative">
+      <div class="relative">
+        <svg class="w-64 h-auto opacity-80" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#4F46E5" d="M37.5,-61.3C48.3,-53.9,56.9,-42.8,64.5,-30.2C72.1,-17.6,78.7,-3.5,78.9,10.9C79.1,25.3,72.9,40,63.1,51.6C53.4,63.2,40.1,71.8,25.9,76.4C11.7,81,-3.4,81.6,-17.9,77.7C-32.4,73.8,-46.2,65.3,-57.4,54.1C-68.5,42.8,-77,28.7,-79.5,13.5C-82,-1.8,-78.5,-18.3,-71.7,-32.7C-64.9,-47.1,-54.8,-59.4,-42.1,-66.1C-29.4,-72.8,-14.7,-73.9,-0.7,-72.9C13.4,-71.8,26.7,-68.6,37.5,-61.3Z" transform="translate(100 100)" />
+        </svg>
+        
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="text-6xl font-bold text-white">?</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</LayoutSimple>
