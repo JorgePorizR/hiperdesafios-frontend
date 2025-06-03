@@ -1,7 +1,43 @@
 ---
-import Layout from '@layouts/Layout.astro';
+import Layout from "@layouts/Layout.astro";
+import type { Product } from "@models/products";
+const res = await fetch("http://localhost:3000/api/productos");
+const productos: Product[] = await res.json();
 ---
 
 <Layout title="Página principal de HiperDesafio">
-	<h1 class="text-3xl font-bold underline">Hello world!</h1>
+  <main class="max-w-6xl mx-auto py-10 px-4">
+    <h1 class="text-3xl font-bold mb-8 text-center">Nuestros Productos</h1>
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+    >
+      {
+        productos.map((producto) => (
+          <div class="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <img
+              src={producto.imagenUrl}
+              alt={producto.nombre}
+              class="w-full h-48 object-contain"
+            />
+            <div class="p-4">
+              <h2 class="text-lg font-semibold mb-2">{producto.nombre}</h2>
+              <p class="text-sm text-gray-500 mb-1 capitalize">
+                Categoría: {producto.categoria}
+              </p>
+              <p class="text-green-600 font-bold text-lg mb-2">
+                ${Number(producto.precio).toFixed(2)}
+              </p>
+              <p
+                class={`text-sm ${producto.stock > 0 ? "text-blue-600" : "text-red-500"}`}
+              >
+                {producto.stock > 0
+                  ? `En stock: ${producto.stock}`
+                  : "Sin stock"}
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </main>
 </Layout>

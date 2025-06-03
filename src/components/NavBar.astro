@@ -2,14 +2,11 @@
 import { categories } from "@models/categories";
 import UserMenu from "@components/react/UserMenu";
 import Logo from "@icons/Logo.svg";
-
 interface Props {
   isLoggedIn?: boolean;
 }
-
 const { isLoggedIn = true } = Astro.props;
 ---
-
 <nav
   class="fixed top-0 left-0 w-full z-50 bg-white transition-colors duration-300 shadow-md"
   id="navbar"
@@ -23,17 +20,18 @@ const { isLoggedIn = true } = Astro.props;
           <Logo class="h-24 w-24" />
         </a>
       </div>
-
       <!-- Opciones principales de navegación -->
       <div class="hidden md:flex items-center space-x-8">
         <!-- Menú de categorías con dropdown -->
-        <div class="relative group">
+        <div class="relative">
           <button
-            class="text-gray-700 hover:text-[#ED6A0F] font-medium transition-colors duration-200 flex items-center"
+            id="categories-button"
+            class="text-gray-700 hover:text-[#ED6A0F] font-medium transition-colors duration-200 flex items-center focus:outline-none"
           >
             Categorías
             <svg
-              class="ml-1 w-4 h-4"
+              id="categories-arrow"
+              class="ml-1 w-4 h-4 transition-transform duration-200"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -46,16 +44,16 @@ const { isLoggedIn = true } = Astro.props;
                 d="M19 9l-7 7-7-7"></path>
             </svg>
           </button>
-
           <!-- Dropdown de categorías -->
           <div
-            class="absolute z-10 left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+            id="categories-dropdown"
+            class="absolute z-50 left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible transform translate-y-[-10px] transition-all duration-200 border border-gray-200"
           >
             {
               categories.map((category) => (
                 <a
                   href={`/categoria/${category.slug}`}
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#ED6A0F] transition-colors duration-150"
                 >
                   {category.name}
                 </a>
@@ -63,7 +61,6 @@ const { isLoggedIn = true } = Astro.props;
             }
           </div>
         </div>
-
         <!-- Desafíos -->
         <a
           href="/desafios"
@@ -71,7 +68,6 @@ const { isLoggedIn = true } = Astro.props;
         >
           Desafíos
         </a>
-
         <!-- Ranking -->
         <a
           href="/ranking"
@@ -80,7 +76,6 @@ const { isLoggedIn = true } = Astro.props;
           Ranking
         </a>
       </div>
-
       <!-- Usuario -->
       <div class="relative">
         <UserMenu isLoggedIn={isLoggedIn} client:load />
@@ -90,12 +85,74 @@ const { isLoggedIn = true } = Astro.props;
   <script>
     document.addEventListener("astro:page-load", () => {
       if (typeof window !== "undefined") {
+        // Funcionalidad de scroll para el navbar
         window.addEventListener("scroll", () => {
           const navbar = document.getElementById("navbar");
           if (window.scrollY > 10) {
             navbar?.classList.add("bg-white/80", "backdrop-blur");
           } else {
             navbar?.classList.remove("bg-white/80", "backdrop-blur");
+          }
+        });
+
+        // Funcionalidad del dropdown de categorías
+        const categoriesButton = document.getElementById("categories-button");
+        const categoriesDropdown = document.getElementById("categories-dropdown");
+        const categoriesArrow = document.getElementById("categories-arrow");
+        let isDropdownOpen = false;
+
+        function toggleDropdown() {
+          isDropdownOpen = !isDropdownOpen;
+          if (isDropdownOpen) {
+            categoriesDropdown?.classList.remove("opacity-0", "invisible", "translate-y-[-10px]");
+            categoriesDropdown?.classList.add("opacity-100", "visible", "translate-y-0");
+            categoriesArrow?.classList.add("rotate-180");
+          } else {
+            categoriesDropdown?.classList.add("opacity-0", "invisible", "translate-y-[-10px]");
+            categoriesDropdown?.classList.remove("opacity-100", "visible", "translate-y-0");
+            categoriesArrow?.classList.remove("rotate-180");
+          }
+        }
+
+        function closeDropdown() {
+          isDropdownOpen = false;
+          categoriesDropdown?.classList.add("opacity-0", "invisible", "translate-y-[-10px]");
+          categoriesDropdown?.classList.remove("opacity-100", "visible", "translate-y-0");
+          categoriesArrow?.classList.remove("rotate-180");
+        }
+
+        // Event listeners
+        categoriesButton?.addEventListener("click", (e) => {
+          e.stopPropagation();
+          toggleDropdown();
+        });
+
+        // Cerrar dropdown al hacer click fuera
+        document.addEventListener("click", (e) => {
+          if (!categoriesButton?.contains(e.target as Node) && 
+              !categoriesDropdown?.contains(e.target as Node)) {
+            closeDropdown();
+          }
+        });
+
+        // Cerrar dropdown con la tecla Escape
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && isDropdownOpen) {
+            closeDropdown();
+          }
+        });
+
+        // Mantener funcionalidad hover en desktop
+        const categoriesContainer = categoriesButton?.parentElement;
+        categoriesContainer?.addEventListener("mouseenter", () => {
+          if (!isDropdownOpen) {
+            toggleDropdown();
+          }
+        });
+
+        categoriesContainer?.addEventListener("mouseleave", () => {
+          if (isDropdownOpen) {
+            closeDropdown();
           }
         });
       }
