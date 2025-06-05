@@ -9,7 +9,7 @@ interface CreateTemporadaFormProps {
 
 export default function CreateTemporadaForm({ isOpen, onClose, onSuccess }: CreateTemporadaFormProps) {
   const [formData, setFormData] = useState({
-    nombre: ''
+    nombre: '',
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,7 +26,7 @@ export default function CreateTemporadaForm({ isOpen, onClose, onSuccess }: Crea
       onSuccess();
       onClose();
       setFormData({
-        nombre: ''
+        nombre: '',
       });
     } catch (error) {
       console.error('Error:', error);

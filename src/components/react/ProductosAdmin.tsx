@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import axios from 'axios';
 import CreateProductoForm from './form/CreateProductoForm';
 import EditProductoForm from './form/EditProductoForm';
@@ -21,6 +21,7 @@ export default function ProductosAdmin() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedProductoId, setSelectedProductoId] = useState<number | null>(null);
+  const fileInputRefs = useRef<{ [key: number]: HTMLInputElement | null }>({});
 
   const fetchProductos = async () => {
     setIsLoading(true);
@@ -56,6 +57,32 @@ export default function ProductosAdmin() {
         console.error('Error al eliminar producto:', error);
         alert('Error al eliminar el producto');
       }
+    }
+  };
+
+  const handleUploadClick = (id: number) => {
+    if (fileInputRefs.current[id]) {
+      fileInputRefs.current[id]!.click();
+    }
+  };
+
+  const handleFileChange = async (id: number, event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const formData = new FormData();
+    formData.append('imagen', file);
+    try {
+      await axios.post(`http://localhost:3000/api/productos/${id}/imagen`, formData, {
+        headers: {
+          'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      alert('Imagen subida correctamente');
+      fetchProductos();
+    } catch (error) {
+      console.error('Error al subir imagen:', error);
+      alert('Error al subir la imagen');
     }
   };
 
@@ -135,10 +162,25 @@ export default function ProductosAdmin() {
                     </button>
                     <button 
                       onClick={() => handleDelete(producto.id)}
-                      className="text-red-600 hover:text-red-900"
+                      className="text-red-600 hover:text-red-900 mr-3"
                     >
                       Eliminar
                     </button>
+                    <button
+                      onClick={() => handleUploadClick(producto.id)}
+                      className="text-green-600 hover:text-green-900"
+                    >
+                      Subir Imagen
+                    </button>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      ref={el => {
+                        if (el) fileInputRefs.current[producto.id] = el;
+                      }}
+                      onChange={e => handleFileChange(producto.id, e)}
+                    />
                   </td>
                 </tr>
               ))}

@@ -8,7 +8,6 @@ interface Temporada {
   fecha_inicio: string;
   fecha_fin: string;
   estado: 'ACTIVA' | 'TERMINADA' | 'DESACTIVA';
-  descripcion: string;
 }
 
 export default function TemporadasAdmin() {
@@ -21,7 +20,8 @@ export default function TemporadasAdmin() {
     try {
       const response = await axios.get('http://localhost:3000/api/temporadas', {
         headers: {
-          'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+          'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
         }
       });
       setTemporadas(response.data);
@@ -42,6 +42,22 @@ export default function TemporadasAdmin() {
         return 'bg-blue-100 text-blue-800';
       default:
         return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const handleActivate = async (id: number) => {
+    const confirmacion = window.confirm('¿Estás seguro de querer activar esta temporada?\n\nRecuerda que al activar una temporada, se desactivarán las temporadas anteriores.');
+    if (!confirmacion) return;
+    try {
+      await axios.post(`http://localhost:3000/api/temporadas/${id}/activar`, {}, {
+        headers: {
+          'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      fetchTemporadas();
+    } catch (error) {
+      console.error('Error al activar la temporada:', error);
     }
   };
 
@@ -87,9 +103,6 @@ export default function TemporadasAdmin() {
                   Estado
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Descripción
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Acciones
                 </th>
               </tr>
@@ -111,15 +124,12 @@ export default function TemporadasAdmin() {
                       {temporada.estado}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-500">
-                    {temporada.descripcion}
-                  </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button className="text-indigo-600 hover:text-indigo-900 mr-3">
-                      Editar
-                    </button>
-                    <button className="text-red-600 hover:text-red-900">
-                      Eliminar
+                    <button
+                      onClick={() => handleActivate(temporada.id)}
+                      className="text-indigo-600 hover:text-indigo-900 mr-3"
+                    >
+                      Activar
                     </button>
                   </td>
                 </tr>
