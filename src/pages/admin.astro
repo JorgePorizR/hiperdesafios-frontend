@@ -1,0 +1,119 @@
+---
+import Layout from "@layouts/Layout.astro";
+import ProductosAdmin from "../components/react/ProductosAdmin";
+import InsigniasAdmin from "../components/react/InsigniasAdmin";
+import TemporadasAdmin from "../components/react/TemporadasAdmin";
+---
+
+<Layout title="Admin">
+  <div class="flex h-screen bg-gray-100">
+    <!-- Sidebar -->
+    <div class="w-64 bg-white shadow-lg">
+      <div class="p-4">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Panel Admin</h2>
+        <nav class="space-y-2">
+          <button
+            id="productosBtn"
+            class="w-full flex items-center px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-200"
+          >
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+            Productos
+          </button>
+          <button
+            id="insigniasBtn"
+            class="w-full flex items-center px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-200"
+          >
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+            </svg>
+            Insignias
+          </button>
+          <button
+            id="temporadasBtn"
+            class="w-full flex items-center px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-200"
+          >
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            Temporadas
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-8">
+      <div id="contentArea">
+        <div id="productosSection" class="hidden">
+          <ProductosAdmin client:load />
+        </div>
+        <div id="insigniasSection" class="hidden">
+          <InsigniasAdmin client:load />
+        </div>
+        <div id="temporadasSection" class="hidden">
+          <TemporadasAdmin client:load />
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const productosBtn = document.getElementById('productosBtn') as HTMLButtonElement;
+  const insigniasBtn = document.getElementById('insigniasBtn') as HTMLButtonElement;
+  const temporadasBtn = document.getElementById('temporadasBtn') as HTMLButtonElement;
+  const productosSection = document.getElementById('productosSection') as HTMLDivElement;
+  const insigniasSection = document.getElementById('insigniasSection') as HTMLDivElement;
+  const temporadasSection = document.getElementById('temporadasSection') as HTMLDivElement;
+
+  function updateActiveButton(activeButton: HTMLButtonElement) {
+    // Remove active state from all buttons
+    [productosBtn, insigniasBtn, temporadasBtn].forEach(btn => {
+      if (btn) {
+        btn.classList.remove('bg-indigo-50', 'text-indigo-600');
+        btn.classList.add('text-gray-700');
+      }
+    });
+
+    // Add active state to clicked button
+    activeButton.classList.remove('text-gray-700');
+    activeButton.classList.add('bg-indigo-50', 'text-indigo-600');
+  }
+
+  function showSection(section: HTMLDivElement) {
+    // Hide all sections
+    [productosSection, insigniasSection, temporadasSection].forEach(s => {
+      if (s) s.classList.add('hidden');
+    });
+    // Show selected section
+    section.classList.remove('hidden');
+  }
+
+  if (productosBtn && productosSection) {
+    productosBtn.addEventListener('click', () => {
+      updateActiveButton(productosBtn);
+      showSection(productosSection);
+    });
+  }
+
+  if (insigniasBtn && insigniasSection) {
+    insigniasBtn.addEventListener('click', () => {
+      updateActiveButton(insigniasBtn);
+      showSection(insigniasSection);
+    });
+  }
+
+  if (temporadasBtn && temporadasSection) {
+    temporadasBtn.addEventListener('click', () => {
+      updateActiveButton(temporadasBtn);
+      showSection(temporadasSection);
+    });
+  }
+
+  // Show productos section by default
+  if (productosBtn && productosSection) {
+    productosBtn.click();
+  }
+</script>

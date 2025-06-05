@@ -2,10 +2,6 @@
 import { categories } from "@models/categories";
 import UserMenu from "@components/react/UserMenu";
 import Logo from "@icons/Logo.svg";
-interface Props {
-  isLoggedIn?: boolean;
-}
-const { isLoggedIn = true } = Astro.props;
 ---
 <nav
   class="fixed top-0 left-0 w-full z-50 bg-white transition-colors duration-300 shadow-md"
@@ -78,7 +74,7 @@ const { isLoggedIn = true } = Astro.props;
       </div>
       <!-- Usuario -->
       <div class="relative">
-        <UserMenu isLoggedIn={isLoggedIn} client:load />
+        <UserMenu client:load />
       </div>
     </div>
   </div>
