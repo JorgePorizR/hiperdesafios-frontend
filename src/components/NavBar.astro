@@ -2,6 +2,7 @@
 import { categories } from "@models/categories";
 import UserMenu from "@components/react/UserMenu";
 import Logo from "@icons/Logo.svg";
+import CarritoModal from "@components/react/CarritoModal";
 ---
 <nav
   class="fixed top-0 left-0 w-full z-50 bg-white transition-colors duration-300 shadow-md"
@@ -72,9 +73,12 @@ import Logo from "@icons/Logo.svg";
           Ranking
         </a>
       </div>
-      <!-- Usuario -->
-      <div class="relative">
+      <!-- Usuario y Carrito -->
+      <div class="relative flex items-center gap-4">
         <UserMenu client:load />
+        <div id="carrito-react-root">
+          <CarritoModal client:load />
+        </div>
       </div>
     </div>
   </div>

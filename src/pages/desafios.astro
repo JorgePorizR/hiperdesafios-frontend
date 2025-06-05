@@ -1,7 +1,54 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import type { Desafio } from "@models/desafio";
+
+const res = await fetch("http://localhost:3000/api/desafios/activos");
+const desafios: Desafio[] = await res.json();
+
+export const prerender = false;
 ---
 
 <Layout title="Desafios de HiperDesafio">
-  esto son los desafios
+  <main class="max-w-6xl mx-auto py-10 px-4">
+    <h1 class="text-3xl font-bold mb-8 text-center" style="color:#ED6A0F">Desafíos Activos</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        desafios.length === 0 ? (
+          <div class="col-span-full text-center text-gray-500">No hay desafíos activos en este momento.</div>
+        ) : (
+          desafios.map((desafio) => (
+            <div class="bg-white shadow-lg rounded-2xl overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-200">
+              <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                  <h2 class="text-xl font-bold text-gray-900">{desafio.nombre}</h2>
+                  {
+                    desafio.puntos_recompensa > 0 ? (
+                      <span class="bg-[#ED6A0F] text-white text-sm font-bold px-3 py-1 rounded-full">+{desafio.puntos_recompensa} puntos</span>
+                    ) : (
+                      <span class="bg-[#ED6A0F] text-white text-sm font-bold px-3 py-1 rounded-full"></span>
+                    )
+                  }
+                </div>
+                <p class="text-gray-600 mb-4 line-clamp-3">{desafio.descripcion}</p>
+                <div class="flex flex-col gap-2 text-sm text-gray-500">
+                  <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span>Inicio: {new Date(desafio.fecha_inicio).toLocaleDateString()}</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span>Fin: {new Date(desafio.fecha_fin).toLocaleDateString()}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+        )
+      }
+    </div>
+  </main>
 </Layout>

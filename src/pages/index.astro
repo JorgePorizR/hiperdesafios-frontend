@@ -7,35 +7,47 @@ const productos: Product[] = await res.json();
 
 <Layout title="Página principal de HiperDesafio">
   <main class="max-w-6xl mx-auto py-10 px-4">
-    <h1 class="text-3xl font-bold mb-8 text-center">Nuestros Productos</h1>
+    <h1 class="text-3xl font-bold mb-8 text-center" style="color:#ED6A0F">Nuestros Productos</h1>
     <div
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
     >
       {
         productos.map((producto) => (
-          <div class="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-xl transition-shadow duration-300">
-            <img
-              src={producto.imagenUrl}
-              alt={producto.nombre}
-              class="w-full h-48 object-contain"
-            />
-            <div class="p-4">
-              <h2 class="text-lg font-semibold mb-2">{producto.nombre}</h2>
-              <p class="text-sm text-gray-500 mb-1 capitalize">
-                Categoría: {producto.categoria}
-              </p>
-              <p class="text-green-600 font-bold text-lg mb-2">
-                ${Number(producto.precio).toFixed(2)}
-              </p>
+          <a
+            href={`/producto/${producto.id}`}
+            class="group block bg-white shadow-lg rounded-2xl overflow-hidden transition-transform duration-200 hover:scale-105 hover:shadow-2xl border border-gray-100 relative"
+            style="text-decoration:none"
+          >
+            <div class="relative bg-gray-50 flex items-center justify-center h-56">
+              <img
+                transition:name={`img-${producto.id}`}
+                src={producto.imagenUrl}
+                alt={producto.nombre}
+                class="w-auto h-40 object-contain transition-transform duration-200 group-hover:scale-110"
+                loading="lazy"
+              />
+              {producto.es_destacado && (
+                <span class="absolute top-3 left-3 bg-[#ED6A0F] text-white text-xs font-bold px-3 py-1 rounded-full shadow">Destacado</span>
+              )}
+            </div>
+            <div class="p-5 flex flex-col gap-2">
+              <h2 class="text-lg font-bold mb-1 text-gray-900 group-hover:text-[#ED6A0F] transition-colors" transition:name={`producto_nombre-${producto.id}`}>{producto.nombre}</h2>
+              <p class="text-xs text-gray-500 mb-1 capitalize">Categoría: <span class="font-medium text-gray-700">{producto.categoria}</span></p>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xl font-bold" style="color:#ED6A0F">${Number(producto.precio).toFixed(2)}</span>
+                {producto.punto_extra > 0 && (
+                  <span class="bg-[#ED6A0F] bg-opacity-10 text-[#ED6A0F] text-xs px-2 py-0.5 rounded-full font-semibold">+{producto.punto_extra} pts</span>
+                )}
+              </div>
               <p
-                class={`text-sm ${producto.stock > 0 ? "text-blue-600" : "text-red-500"}`}
+                class={`text-sm font-medium ${producto.stock > 0 ? "text-green-600" : "text-red-500"}`}
               >
                 {producto.stock > 0
                   ? `En stock: ${producto.stock}`
                   : "Sin stock"}
               </p>
             </div>
-          </div>
+          </a>
         ))
       }
     </div>

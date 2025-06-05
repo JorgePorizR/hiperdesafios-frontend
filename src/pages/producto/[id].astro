@@ -1,0 +1,51 @@
+---
+import Layout from "@layouts/Layout.astro";
+import type { Product } from "@models/products";
+import AddToCartButton from "@components/react/AddToCartButton";
+
+const { id } = Astro.params;
+if (!id) return Astro.redirect('/404');
+
+const res = await fetch(`http://localhost:3000/api/productos/${id}`);
+if (!res.ok) return Astro.redirect('/404');
+const producto: Product = await res.json();
+
+export const prerender = false;
+---
+
+<Layout title={`Producto: ${producto.nombre}`}>  
+  <main class="max-w-3xl mx-auto py-10 px-4">
+    <div class="flex flex-col md:flex-row gap-8 bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+      <div class="flex-1 flex items-center justify-center bg-gray-50 rounded-xl p-4">
+        <img
+          transition:name={`img-${producto.id}`}
+          src={producto.imagenUrl}
+          alt={producto.nombre}
+          class="w-full max-w-xs h-72 object-contain"
+        />
+      </div>
+      <div class="flex-1 flex flex-col gap-4">
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2" transition:name={`producto_nombre-${producto.id}`}>{producto.nombre}</h1>
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-xl font-bold" style="color:#ED6A0F">${Number(producto.precio).toFixed(2)}</span>
+          {producto.punto_extra > 0 && (
+            <span class="bg-[#ED6A0F] bg-opacity-10 text-[#ED6A0F] text-xs px-2 py-0.5 rounded-full font-semibold">+{producto.punto_extra} pts</span>
+          )}
+          {producto.es_destacado && (
+            <span class="bg-[#ED6A0F] text-white text-xs font-bold px-3 py-1 rounded-full shadow">Destacado</span>
+          )}
+        </div>
+        <div class="flex flex-col gap-1">
+          <span class="text-sm text-gray-500">Categoría: <span class="font-medium text-gray-700">{producto.categoria}</span></span>
+          <span class="text-sm text-gray-500">Stock: <span class={producto.stock > 0 ? 'text-green-600' : 'text-red-500'}>{producto.stock > 0 ? producto.stock : 'Sin stock'}</span></span>
+          <span class="text-sm text-gray-500">Estado: <span class={producto.estado ? 'text-green-600' : 'text-red-500'}>{producto.estado ? 'Activo' : 'Inactivo'}</span></span>
+        </div>
+        {
+          producto.stock > 0 && (
+            <AddToCartButton client:load product={producto} />
+          )
+        }
+      </div>
+    </div>
+  </main>
+</Layout>
