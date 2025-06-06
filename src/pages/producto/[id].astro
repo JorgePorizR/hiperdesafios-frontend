@@ -28,9 +28,6 @@ export const prerender = false;
         <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2" transition:name={`producto_nombre-${producto.id}`}>{producto.nombre}</h1>
         <div class="flex items-center gap-3 mb-2">
           <span class="text-xl font-bold" style="color:#ED6A0F">${Number(producto.precio).toFixed(2)}</span>
-          {producto.punto_extra > 0 && (
-            <span class="bg-[#ED6A0F] bg-opacity-10 text-[#ED6A0F] text-xs px-2 py-0.5 rounded-full font-semibold">+{producto.punto_extra} pts</span>
-          )}
           {producto.es_destacado && (
             <span class="bg-[#ED6A0F] text-white text-xs font-bold px-3 py-1 rounded-full shadow">Destacado</span>
           )}

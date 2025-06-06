@@ -73,7 +73,7 @@ export default function EditInsigniaForm({ insignia, onClose, onUpdated }: EditI
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">Requerimiento</label>
-          <input type="text" name="requerimiento" value={formData.requirimiento} onChange={handleChange} required className="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
+          <input type="text" name="requirimiento" value={formData.requirimiento} onChange={handleChange} required className="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">Cantidad</label>

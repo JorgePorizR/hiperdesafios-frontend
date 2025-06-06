@@ -93,8 +93,8 @@ export default function DesafiosAdmin() {
                 <td className="px-6 py-4 whitespace-nowrap">{desafio.nombre}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{desafio.descripcion}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{desafio.puntos_recompensa}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{desafio.fecha_inicio}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{desafio.fecha_fin}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{new Date(desafio.fecha_inicio).toLocaleDateString()}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{new Date(desafio.fecha_fin).toLocaleDateString()}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{desafio.estado ? 'Activo' : 'Inactivo'}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <button

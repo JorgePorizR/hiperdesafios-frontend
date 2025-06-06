@@ -10,6 +10,7 @@ interface CreateTemporadaFormProps {
 export default function CreateTemporadaForm({ isOpen, onClose, onSuccess }: CreateTemporadaFormProps) {
   const [formData, setFormData] = useState({
     nombre: '',
+    fecha_fin: '',
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,6 +28,7 @@ export default function CreateTemporadaForm({ isOpen, onClose, onSuccess }: Crea
       onClose();
       setFormData({
         nombre: '',
+        fecha_fin: '',
       });
     } catch (error) {
       console.error('Error:', error);
@@ -49,6 +51,16 @@ export default function CreateTemporadaForm({ isOpen, onClose, onSuccess }: Crea
               type="text"
               value={formData.nombre}
               onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Fecha Fin</label>
+            <input
+              type="date"
+              value={formData.fecha_fin}
+              onChange={(e) => setFormData({ ...formData, fecha_fin: e.target.value })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               required
             />

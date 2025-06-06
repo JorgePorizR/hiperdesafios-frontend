@@ -9,6 +9,7 @@ interface Insignia {
   imagenUrl: string;
   requirimiento: string;
   cantidad: number;
+  estado: boolean;
 }
 
 export default function InsigniasAdmin() {
@@ -112,6 +113,7 @@ export default function InsigniasAdmin() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Requerimiento</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cantidad</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
               </tr>
             </thead>
@@ -125,6 +127,7 @@ export default function InsigniasAdmin() {
                   <td className="px-6 py-4 whitespace-nowrap">{insignia.descripcion}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{insignia.requirimiento}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{insignia.cantidad}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{insignia.estado ? "Activo" : "Inactivo"}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <button
                       onClick={() => {

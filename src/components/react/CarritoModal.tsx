@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 interface Product {
   id: number;
@@ -60,13 +61,31 @@ export default function CarritoModal() {
   const subtotal = (p: Product) => p.precio * p.cantidad;
   const total = carrito.reduce((acc, p) => acc + subtotal(p), 0);
 
-  const handleComprar = () => {
+  const handleComprar = async () => {
     const usuario_id = sessionStorage.getItem('usuario_id');
-    const productos = carrito.map(p => ({ producto_id: p.id, cantidad: p.cantidad, precio_unitario: p.precio }));
+    const token = sessionStorage.getItem('token');
+    const productos = carrito.map(p => ({ producto_id: p.id, cantidad: p.cantidad, precio_unitario: Number(p.precio)}));
     const pedido = { usuario_id: Number(usuario_id), productos };
-    // Aquí puedes hacer la petición real, por ahora solo imprime
-    console.log('Pedido:', pedido);
-    alert('Pedido generado. Revisa la consola.');
+    
+    try {
+      const response = await axios.post('http://localhost:3000/api/compras', pedido, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 200 || response.status === 201) {
+        sessionStorage.removeItem('carrito');
+        setCarrito([]);
+        setOpen(false);
+        alert('Pedido realizado con éxito. Gracias por tu compra.');
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error('Error al realizar la compra:', error);
+      alert('Hubo un error al procesar tu compra. Por favor, intenta nuevamente.');
+    }
   };
 
   return (

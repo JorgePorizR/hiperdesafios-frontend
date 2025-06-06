@@ -35,9 +35,9 @@ const productos: Product[] = await res.json();
               <p class="text-xs text-gray-500 mb-1 capitalize">Categoría: <span class="font-medium text-gray-700">{producto.categoria}</span></p>
               <div class="flex items-center gap-2 mb-1">
                 <span class="text-xl font-bold" style="color:#ED6A0F">${Number(producto.precio).toFixed(2)}</span>
-                {producto.punto_extra > 0 && (
-                  <span class="bg-[#ED6A0F] bg-opacity-10 text-[#ED6A0F] text-xs px-2 py-0.5 rounded-full font-semibold">+{producto.punto_extra} pts</span>
-                )}
+                {/*producto.punto_extra > 0 && (
+                  <span class="bg-[#ED6A0F] bg-opacity-10 text-[#ffffff] text-xs px-2 py-0.5 rounded-full font-semibold">+{producto.punto_extra} pts</span>
+                )*/}
               </div>
               <p
                 class={`text-sm font-medium ${producto.stock > 0 ? "text-green-600" : "text-red-500"}`}

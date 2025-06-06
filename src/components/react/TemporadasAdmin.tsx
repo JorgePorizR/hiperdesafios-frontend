@@ -125,12 +125,16 @@ export default function TemporadasAdmin() {
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button
-                      onClick={() => handleActivate(temporada.id)}
-                      className="text-indigo-600 hover:text-indigo-900 mr-3"
-                    >
-                      Activar
-                    </button>
+                    {temporada.estado === "DESACTIVA" ? (
+                      <button
+                        onClick={() => handleActivate(temporada.id)}
+                        className="text-indigo-600 hover:text-indigo-900 mr-3"
+                      >
+                        Activar
+                      </button>
+                    ) : (
+                      <></>
+                    )}
                   </td>
                 </tr>
               ))}
