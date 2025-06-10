@@ -4,6 +4,10 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+ignoredBuiltDependencies:
+  - esbuild
+  - sharp
+
 importers:
 
   .:
