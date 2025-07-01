@@ -141,6 +141,26 @@ export default function UserMenu() {
                 </svg>
                 Insignias
               </a>
+              <a
+                href="/premios/me"
+                className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="h-5 w-5 mr-2 text-gray-500"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9Z"
+                  />
+                </svg>
+                Mis Premios
+              </a>
               {usuario.esAdmin && (
                 <a
                   href="/admin"
