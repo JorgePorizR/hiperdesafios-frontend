@@ -23,12 +23,12 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
       setModal('exists');
       return;
     }
-    carrito.push({ 
-      ...product, 
+    const nuevoCarrito = [...carrito, {
+      ...product,
       cantidad: 1,
-      stock_disponible: product.stock // Guardamos el stock disponible al momento de agregar
-    });
-    sessionStorage.setItem('carrito', JSON.stringify(carrito));
+      stock_disponible: product.stock
+    }];
+    sessionStorage.setItem('carrito', JSON.stringify(nuevoCarrito));
     setModal('added');
   };
 
