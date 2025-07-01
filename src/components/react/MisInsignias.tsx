@@ -1,19 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-interface Usuario {
-  id: number;
-  nombre: string;
-  email: string;
-  insignia_usuario: {
-    fecha_obtencion: string;
-    usuario_id: number;
-    insignia_id: number;
-    temporada_id: number;
-    createdAt: string;
-    updatedAt: string;
-  };
-}
 
 interface Insignia {
   imagenUrl: string;
@@ -23,7 +10,13 @@ interface Insignia {
   estado: boolean;
   requirimiento: string;
   cantidad: number;
-  usuarios: Usuario[];
+  fecha_obtencion: string;
+  temporada?: {
+    id: number;
+    nombre: string;
+    estado: string;
+  };
+  insignia_usuario_id?: number;
 }
 
 export default function MisInsignias() {
@@ -98,7 +91,7 @@ export default function MisInsignias() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {insignias.map((insignia) => (
             <div 
-              key={insignia.id} 
+              key={insignia.insignia_usuario_id || `${insignia.id}-${insignia.fecha_obtencion}`} 
               className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
             >
               <div className="relative">
@@ -115,14 +108,21 @@ export default function MisInsignias() {
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2 text-gray-800">{insignia.nombre}</h3>
                 <p className="text-gray-600 mb-4">{insignia.descripcion}</p>
-                
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center space-x-2">
                     <span className="text-sm text-gray-500">
-                      Obtenida: {new Date(insignia.usuarios[0]?.insignia_usuario.fecha_obtencion).toLocaleDateString()}
+                      Obtenida: {new Date(insignia.fecha_obtencion).toLocaleDateString()}
                     </span>
                   </div>
                 </div>
+                {insignia.temporada && (
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold px-2 py-1 rounded bg-orange-100 text-[#ED6A0F] border border-[#ED6A0F]">
+                      Temporada: <span className="font-bold">{insignia.temporada.nombre}</span>
+                      <span className="ml-2 px-2 py-0.5 rounded bg-gray-100 text-gray-600 text-xs">{insignia.temporada.estado}</span>
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           ))}

@@ -48,6 +48,21 @@ export default function DesafiosAdmin() {
     }
   };
 
+  const handleActivar = async (id: number) => {
+    if (window.confirm('¿Estás seguro de que quieres activar este desafío?')) {
+      try {
+        await axios.post(`http://localhost:3000/api/desafios/${id}/activar`, {}, {
+          headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+          }
+        });
+        await fetchDesafios();
+      } catch (error) {
+        console.error('Error activando desafío:', error);
+      }
+    }
+  };
+
   return (
     <div className="container mx-auto px-4">
       <div className="flex justify-between items-center mb-6">
@@ -97,12 +112,21 @@ export default function DesafiosAdmin() {
                 <td className="px-6 py-4 whitespace-nowrap">{new Date(desafio.fecha_fin).toLocaleDateString()}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{desafio.estado ? 'Activo' : 'Inactivo'}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <button
-                    onClick={() => handleDesactivar(desafio.id)}
-                    className="text-red-600 hover:text-red-900"
-                  >
-                    Desactivar
-                  </button>
+                  {desafio.estado ? (
+                    <button
+                      onClick={() => handleDesactivar(desafio.id)}
+                      className="text-red-600 hover:text-red-900"
+                    >
+                      Desactivar
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleActivar(desafio.id)}
+                      className="text-green-600 hover:text-green-900"
+                    >
+                      Activar
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
