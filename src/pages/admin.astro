@@ -5,6 +5,7 @@ import InsigniasAdmin from "../components/react/InsigniasAdmin";
 import TemporadasAdmin from "../components/react/TemporadasAdmin";
 import UsuariosAdmin from "../components/react/UsuariosAdmin";
 import DesafiosAdmin from "../components/react/DesafiosAdmin";
+import PremiosAdmin from "../components/react/PremiosAdmin";
 ---
 
 <Layout title="Admin">
@@ -59,6 +60,15 @@ import DesafiosAdmin from "../components/react/DesafiosAdmin";
             </svg>
             Desafíos
           </button>
+          <button
+            id="premiosBtn"
+            class="w-full flex items-center px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors duration-200"
+          >
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 10c-2.21 0-4-1.79-4-4h2a2 2 0 004 0h2c0 2.21-1.79 4-4 4zm6-8V7a6 6 0 10-12 0v3a6 6 0 0012 0z" />
+            </svg>
+            Premios
+          </button>
         </nav>
       </div>
     </div>
@@ -81,6 +91,9 @@ import DesafiosAdmin from "../components/react/DesafiosAdmin";
         <div id="desafiosSection" class="hidden">
           <DesafiosAdmin client:load />
         </div>
+        <div id="premiosSection" class="hidden">
+          <PremiosAdmin client:load />
+        </div>
       </div>
     </div>
   </div>
@@ -97,15 +110,17 @@ import DesafiosAdmin from "../components/react/DesafiosAdmin";
   const insigniasBtn = document.getElementById('insigniasBtn') as HTMLButtonElement;
   const temporadasBtn = document.getElementById('temporadasBtn') as HTMLButtonElement;
   const desafiosBtn = document.getElementById('desafiosBtn') as HTMLButtonElement;
+  const premiosBtn = document.getElementById('premiosBtn') as HTMLButtonElement;
   const usuariosSection = document.getElementById('usuariosSection') as HTMLDivElement;
   const productosSection = document.getElementById('productosSection') as HTMLDivElement;
   const insigniasSection = document.getElementById('insigniasSection') as HTMLDivElement;
   const temporadasSection = document.getElementById('temporadasSection') as HTMLDivElement;
   const desafiosSection = document.getElementById('desafiosSection') as HTMLDivElement;
+  const premiosSection = document.getElementById('premiosSection') as HTMLDivElement;
 
   function updateActiveButton(activeButton: HTMLButtonElement) {
     // Remove active state from all buttons
-    [usuariosBtn, productosBtn, insigniasBtn, temporadasBtn, desafiosBtn].forEach(btn => {
+    [usuariosBtn, productosBtn, insigniasBtn, temporadasBtn, desafiosBtn, premiosBtn].forEach(btn => {
       if (btn) {
         btn.classList.remove('bg-indigo-50', 'text-indigo-600');
         btn.classList.add('text-gray-700');
@@ -119,7 +134,7 @@ import DesafiosAdmin from "../components/react/DesafiosAdmin";
 
   function showSection(section: HTMLDivElement) {
     // Hide all sections
-    [usuariosSection, productosSection, insigniasSection, temporadasSection, desafiosSection].forEach(s => {
+    [usuariosSection, productosSection, insigniasSection, temporadasSection, desafiosSection, premiosSection].forEach(s => {
       if (s) s.classList.add('hidden');
     });
     // Show selected section
@@ -160,6 +175,14 @@ import DesafiosAdmin from "../components/react/DesafiosAdmin";
       showSection(desafiosSection);
     });
   }
+
+  if (premiosBtn && premiosSection) {
+    premiosBtn.addEventListener('click', () => {
+      updateActiveButton(premiosBtn);
+      showSection(premiosSection);
+    });
+  }
+
   // Show productos section by default
   if (usuariosBtn && usuariosSection) {
     usuariosBtn.click();

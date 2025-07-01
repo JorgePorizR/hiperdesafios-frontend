@@ -54,7 +54,7 @@ export default function MisInsignias() {
             'Authorization': `Bearer ${token}`
           }
         });
-
+        console.log(response);
         setInsignias(response.data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Error desconocido');
